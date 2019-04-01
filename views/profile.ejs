@@ -1,0 +1,92 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+  <title>Node Authentication</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <script src='http://d3js.org/d3.v2.js'></script>
+  <style>
+  body        { padding-top:80px; word-wrap:break-word; }
+  .slice text {
+    font-size: 16pt;
+    font-family: Arial;
+  }
+  </style>
+  <script src="/scripts/d3.v2.js"></script>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+  </script>
+</head>
+<body>
+<a href="mailto:?subject=I wanted you to see this site&amp;body=Check out this site http://www.website.com."
+   title="Share by Email">
+  <img src="http://png-2.findicons.com/files/icons/573/must_have/48/mail.png">
+</a>
+<a href="http://pdfcrowd.com/url_to_pdf/">Save this page to a PDF</a>
+    <form class="fileupload" action="upload" method="post" enctype="multipart/form-data">
+      <h1>Send and Email</h1>
+      <input type="file" name="upfile" value="" required><br>
+      <input type="email" name="sendEmail" value="enter recipients" required><br>
+      <input type="text" name="subject" value="enter subject" required><br>
+      <input type="text" name="msg" value="enter text" required><br>      
+      <input type="submit" /><br>
+    </form>
+
+  <div class="container">
+
+    <div class="page-header text-center">
+      <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+      <!-- LOCAL INFORMATION -->
+      <div class="col-sm-6">
+        <div class="well">
+          <h3><span class="fa fa-user"></span> Current user: <%= user.local.username %></h3>
+          <p>
+            <strong>id</strong>: <%= user._id %><br>
+            <strong>username</strong>: <%= user.local.username %><br>
+            <strong>email</strong>: <%= user.local.email %><br>
+            <strong>password</strong>: <%= user.local.password %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+
+    <section>
+      <% if (browserChart == true) { %>
+      <div id='myChartLast'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <% } %>
+       <% if (deviceChart == true) { %>
+		  <div id='myChart'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+        <% } %>
+         <% if (resolutionChart == true) { %>
+      <div id='myChart1'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <% } %>
+       <% if (performanceChart == true) { %>
+      <div id='myChart12'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <% } %>
+       <% if (errorChart == true) { %>
+      <div id='myChart3'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <% } %>
+       <% if (userBehaviorChart == true) { %>
+      <div id='myChart4'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <% } %>
+
+		</section>
+    <div id = "list"></div>
+    <div id = "error_list"></div>
+    <script src="/scripts/profile_data.js"></script>
+  </div>
+
+
+
+
+</body>
+</html>

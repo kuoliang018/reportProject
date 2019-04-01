@@ -1,0 +1,181 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+  </script>
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> Current user: admin</h3>
+                    <p>
+                        <strong>id</strong>: 5c88227f9585691c97c6b142<br>
+                        <strong>username</strong>: admin<br>
+                        <strong>email</strong>: admin@qq.com<br>
+                        <strong>password</strong>: $2a$08$BA8qIDPlt4gI9IyrKgg5H.Zy9/ld4QYcwBX/6tmWdBVVwDITIIRyO
+                    </p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h4> all users </h4>
+    <table>
+        
+        <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span>create a user</h3>
+                    <!-- show any messages that come back with authentication -->
+                    <% if (message.length > 0) { %>
+                      <div class="alert alert-danger"><%= message %></div>
+                    <% } %>
+
+                    <!-- LOGIN FORM -->
+                    <form action="/createuser" method="post">
+                      <div class="form-group">
+                        <label>username</label>
+                        <input type="text" class="form-control" name="username" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                      </div>
+                      <button type="submit" class="btn btn-warning btn-lg">add user</button>
+                    </form>
+                    
+          </div>
+        </div>
+        </div>
+        <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span>update by usedrname refresh to see the change</h3>
+        <form action="/update" method="post">
+                      <div class="form-group">
+                        <label>old username</label>
+                        <input type="text" class="form-control" name="old_username" id='usernameU' required>
+                      </div>
+                      <div class="form-group">
+                        <label>new username</label>
+                        <input type="text" class="form-control" name="new_username" id='new_usernameU' required>
+                      </div>
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" id=emailU required>
+                      </div>
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id=passwordU required>
+                      </div>
+                          
+                    
+                      <button type="submit" class="btn btn-warning btn-lg">update</button>
+                   </form>
+        </div>
+        </div>
+        </div>
+        <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> delete by username </h3>
+                <form action="/delete" method="post">
+                    <div class="form-group">
+                        <label>username</label>
+                        <input type="text" class="form-control" name="usernameDel" id='usernameDel' required>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span>tell which chart available</h3>
+                <form action="/avail" method="post">
+                <div class="form-group">
+                        <label>username</label>
+                        <input type="text" class="form-control" name="usernameAcc" id='usernameAcc' required>
+                    
+<input type="checkbox" name="browserChart" value="browserChart"> browser Chart
+<br>
+<input type="checkbox" name="deviceChart" value="deviceChart"> device Chart
+<br>
+<input type="checkbox" name="resolutionChart" value="resolutionChart"> resolution Chart
+<br>
+<input type="checkbox" name="performanceChart" value="performanceChart"> performance Chart
+<br>
+<input type="checkbox" name="errorChart" value="errorChart"> errorChart
+<br>
+<input type="checkbox" name="userBehaviorChart" value="userBehaviorChart"> userBehavior Chart
+<br>
+<br>
+<button type="submit" class="btn btn-warning btn-lg">Submit</button>
+</div>
+</form>
+            </div>
+        </div>
+    </div>
+        <% for(var i = 0; i < userArray.length; i++) { %>
+        <tr>
+        <div class="row">
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> <%= userArray[i].local.username %></h3>
+                    <p>
+                        <strong>id</strong>: <%= userArray[i]._id %><br>
+                        <strong>username</strong>: <%= userArray[i].local.username %><br>
+                        <strong>email</strong>: <%= userArray[i].local.email %><br>
+                        <strong>password</strong>: <%= userArray[i].local.password %>
+                    </p>
+            </div>
+        </div>
+    </div>
+    </tr>
+    <% } %>
+    
+    </table>
+    <section>
+      <div id='myChartLast'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+		  <div id='myChart'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <div id='myChart1'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <div id='myChart12'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <div id='myChart3'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+      <div id='myChart4'><a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a></div>
+
+		</section>    
+    <div id = "list"></div>
+    <div id = "error_list"></div>
+   
+</div>
+<script src="/scripts/profile_data.js"></script>
+</body>
+</html>
